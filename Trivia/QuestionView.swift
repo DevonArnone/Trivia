@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Question: Identifiable, Codable {
-    var id = UUID()
+    let id = UUID()
     let question: String
     let A: String
     let B: String
