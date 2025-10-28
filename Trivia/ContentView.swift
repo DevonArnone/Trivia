@@ -9,22 +9,38 @@ import SwiftUI
 
 struct ContentView: View {
         // store questions
-    
+    @State private var questions: [Question] = []
     var body: some View {
         NavigationStack {
             List {
-                // Add NavigationLink to QuestionView for each question
+                ForEach(questions) { question in
+                    NavigationLink(destination: QuestionView(question: question)) {
+                        Text(question.question)
+                    }
+                }
             }
-            // Add navigationTitle
-            // Add shuffle button in toolbar
+            .navigationTitle("Trivia")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        questions.shuffle()
+                    } label: {
+                        Image(systemName: "shuffle")
+                    }
+                }
+            }
+            
         }
         .onAppear {
-            let url: URL = Bundle.main.url(forResource: "questions", withExtension: "json")!
-            let data = try! Data(contentsOf: url)
-            // decode the questions
+            if let url = Bundle.main.url(forResource: "questions", withExtension: "json"),
+                   let data = try? Data(contentsOf: url),
+                   let decoded = try? JSONDecoder().decode([Question].self, from: data) {
+                    questions = decoded
+                }
+            }
         }
     }
-}
+
 
 #Preview {
     ContentView()
