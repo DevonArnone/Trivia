@@ -32,14 +32,13 @@ struct ContentView: View {
             
         }
         .onAppear {
-            if let url = Bundle.main.url(forResource: "questions", withExtension: "json"),
-                   let data = try? Data(contentsOf: url),
-                   let decoded = try? JSONDecoder().decode([Question].self, from: data) {
-                    questions = decoded
+            let url: URL = Bundle.main.url(forResource: "questions", withExtension: "json")!
+            let data = try! Data(contentsOf: url)
+            questions = try! JSONDecoder().decode([Question].self, from: data)
+            // decode the questions
                 }
             }
         }
-    }
 
 
 #Preview {

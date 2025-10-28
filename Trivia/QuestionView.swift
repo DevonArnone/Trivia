@@ -8,17 +8,13 @@
 import SwiftUI
 
 struct Question: Identifiable, Codable {
-    let id = UUID()
+    var id = UUID()
     let question: String
     let A: String
     let B: String
     let C: String
     let D: String
     let answer: String
-    
-    private enum CodingKeys: String, CodingKey {
-        case question, A, B, C, D, answer
-    }
 }
 
 struct QuestionView: View {
